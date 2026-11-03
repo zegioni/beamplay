@@ -126,4 +126,6 @@
     <string name="idle_ready_subtitle">Choose this device in the AirPlay menu on your iPhone, iPad or Mac</string>
     <string name="setting_value_on">On</string>
     <string name="setting_value_off">Off</string>
+    <!-- Remaining playback time on the transport bar, e.g. "−12:34" -->
+    <string name="time_remaining" translatable="false">−%1$s</string>
 </resources>

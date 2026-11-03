@@ -8,7 +8,7 @@ on:
 
 jobs:
   jvm-tests:
-    name: JVM protocol tests
+    name: Unit tests (googletv)
     runs-on: ubuntu-latest
 
     steps:
@@ -25,15 +25,18 @@ jobs:
       - name: Grant Gradle wrapper execute permission
         run: chmod +x gradlew
 
-      - name: Run JVM protocol test suite
-        run: ./gradlew :test-runner:test --stacktrace
+      - name: Configure Android SDK path
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Run unit tests (Robolectric)
+        run: ./gradlew :app:testGoogletvDebugUnitTest --stacktrace
 
       - name: Upload JVM test report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: jvm-test-report
-          path: test-runner/build/reports/tests/test/
+          name: unit-test-report
+          path: app/build/reports/tests/testGoogletvDebugUnitTest/
           retention-days: 30
           if-no-files-found: ignore
 

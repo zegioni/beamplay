@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Inter (rsms/inter v4.1, SIL OFL 1.1 — see third_party/inter/LICENSE.txt). Closest freely
      licensed match to Apple's SF Pro, which may only be used on Apple platforms. -->
-<font-family xmlns:android="http://schemas.android.com/apk/res/android">
-    <font android:fontStyle="normal" android:fontWeight="400" android:font="@font/inter_regular" />
-    <font android:fontStyle="normal" android:fontWeight="500" android:font="@font/inter_medium" />
-    <font android:fontStyle="normal" android:fontWeight="600" android:font="@font/inter_semibold" />
-    <font android:fontStyle="normal" android:fontWeight="700" android:font="@font/inter_bold" />
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- android:* for API 26+, app:* for the AndroidX font loader on Fire TV (API 25). -->
+    <font android:fontStyle="normal" android:fontWeight="400" android:font="@font/inter_regular"
+        app:fontStyle="normal" app:fontWeight="400" app:font="@font/inter_regular" tools:targetApi="o" />
+    <font android:fontStyle="normal" android:fontWeight="500" android:font="@font/inter_medium"
+        app:fontStyle="normal" app:fontWeight="500" app:font="@font/inter_medium" tools:targetApi="o" />
+    <font android:fontStyle="normal" android:fontWeight="600" android:font="@font/inter_semibold"
+        app:fontStyle="normal" app:fontWeight="600" app:font="@font/inter_semibold" tools:targetApi="o" />
+    <font android:fontStyle="normal" android:fontWeight="700" android:font="@font/inter_bold"
+        app:fontStyle="normal" app:fontWeight="700" app:font="@font/inter_bold" tools:targetApi="o" />
 </font-family>

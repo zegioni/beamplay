@@ -4,7 +4,6 @@ import com.beamplay.util.Logger
 import java.security.KeyFactory
 import java.security.PrivateKey
 import java.security.PublicKey
-import java.security.interfaces.RSAPrivateCrtKey
 import java.security.spec.PKCS8EncodedKeySpec
 import java.security.spec.RSAPublicKeySpec
 import javax.crypto.Cipher
@@ -50,9 +49,11 @@ object RaopRsa {
 
     /** The public half of the embedded key — used only by tests to round-trip the decrypt path. */
     internal fun publicKeyForTest(): PublicKey {
-        val crt = privateKey as RSAPrivateCrtKey
-        return KeyFactory.getInstance("RSA")
-            .generatePublic(RSAPublicKeySpec(crt.modulus, crt.publicExponent))
+        // Go through a KeySpec instead of casting: which RSA key class we get depends on the
+        // security provider (Conscrypt under Robolectric does not implement RSAPrivateCrtKey).
+        val factory = KeyFactory.getInstance("RSA")
+        val crt = factory.getKeySpec(privateKey, java.security.spec.RSAPrivateCrtKeySpec::class.java)
+        return factory.generatePublic(RSAPublicKeySpec(crt.modulus, crt.publicExponent))
     }
 
     private fun hexToBytes(s: String): ByteArray =

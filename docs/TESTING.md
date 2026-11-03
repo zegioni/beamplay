@@ -48,20 +48,19 @@ adb devices
 ### Full CI Check (same as GitHub Actions)
 
 ```bash
-./gradlew :test-runner:test
+./gradlew :app:testGoogletvDebugUnitTest
 ./gradlew :app:lintGoogletvDebug :app:lintFiretvDebug \
   :app:assembleGoogletvDebug :app:assembleFiretvDebug
 ```
 
 GitHub Actions runs the same checks on `main`:
 
-- `JVM protocol tests`: fast protocol/parser/media-unit coverage through `:test-runner:test`
+- `Unit tests (googletv)`: all unit tests in `app/src/test` through Robolectric
+  (`:app:testGoogletvDebugUnitTest`)
 - `Android lint & debug APKs`: Android lint and both debug APKs
 
-The Android Gradle unit-test tasks are not used as CI gates because several tests
-exercise Android framework classes that are unstable on the host JVM. Use
-`:test-runner:test` for CI-grade protocol/unit coverage and real devices for
-Android framework behavior.
+Use real devices for Android framework behaviour (MediaCodec, NSD, playback) that
+Robolectric can't reproduce.
 
 ---
 

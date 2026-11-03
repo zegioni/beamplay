@@ -387,7 +387,7 @@ class NowPlayingScreen @JvmOverloads constructor(
         val pos = p.positionAt(SystemClock.elapsedRealtime(), paused)
         progressBar.fraction = if (p.durationMs > 0) pos.toFloat() / p.durationMs else 0f
         elapsedView.text = formatTime(pos)
-        remainingView.text = "−" + formatTime(p.durationMs - pos)
+        remainingView.text = context.getString(R.string.time_remaining, formatTime(p.durationMs - pos))
     }
 
     private fun startKenBurns() {

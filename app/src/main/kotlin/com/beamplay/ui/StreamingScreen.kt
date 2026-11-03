@@ -50,6 +50,7 @@ import com.beamplay.util.Logger
  *   val surface = streamingScreen.getSurface()
  *   videoDecoder.initialize(spsBytes, ppsBytes, width, height)
  */
+@androidx.annotation.OptIn(markerClass = [androidx.media3.common.util.UnstableApi::class])
 class StreamingScreen @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -237,7 +238,7 @@ class StreamingScreen @JvmOverloads constructor(
         playbackProgress.fraction = (p.positionSec / p.durationSec).toFloat().coerceIn(0f, 1f)
         playPauseIcon.setImageResource(if (p.rate > 0) R.drawable.ic_np_pause else R.drawable.ic_np_play)
         elapsedView.text = formatTime(p.positionSec)
-        remainingView.text = "−" + formatTime(p.durationSec - p.positionSec)
+        remainingView.text = context.getString(R.string.time_remaining, formatTime(p.durationSec - p.positionSec))
     }
     private fun formatTime(seconds: Double): String {
         val total = seconds.toInt().coerceAtLeast(0)

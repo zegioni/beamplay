@@ -8,14 +8,16 @@
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@drawable/tv_screen_background"
     android:baselineAligned="false">
 
-    <!-- Left: glyph + page title -->
+    <!-- Left: glyph + page title (a 150dp glyph over large text — not a compound drawable) -->
     <LinearLayout
+        tools:ignore="UseCompoundDrawables"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
