@@ -49,10 +49,13 @@ object RaopRsa {
 
     /** The public half of the embedded key — used only by tests to round-trip the decrypt path. */
     internal fun publicKeyForTest(): PublicKey {
-        // Go through a KeySpec instead of casting: which RSA key class we get depends on the
-        // security provider (Conscrypt under Robolectric does not implement RSAPrivateCrtKey).
-        val factory = KeyFactory.getInstance("RSA")
-        val crt = factory.getKeySpec(privateKey, java.security.spec.RSAPrivateCrtKeySpec::class.java)
+        // Re-parse the PKCS#8 bytes with the JDK's own provider when it exists (unit tests on the
+        // host JVM): under Robolectric the default provider may be Conscrypt, whose key class can't
+        // be cast to java.security.interfaces.RSAPrivateCrtKey across class loaders.
+        val factory = runCatching { KeyFactory.getInstance("RSA", "SunRsaSign") }
+            .getOrElse { KeyFactory.getInstance("RSA") }
+        val crt = factory.generatePrivate(java.security.spec.PKCS8EncodedKeySpec(privateKey.encoded))
+            as java.security.interfaces.RSAPrivateCrtKey
         return factory.generatePublic(RSAPublicKeySpec(crt.modulus, crt.publicExponent))
     }
 
